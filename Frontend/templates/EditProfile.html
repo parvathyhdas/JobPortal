@@ -1,0 +1,579 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+         <title>Job Portal </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="site.webmanifest">
+		<link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+
+		<!-- CSS here -->
+            <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/price_rangs.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+   </head>
+
+   <body>
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{% static 'assets/img/logo/logo.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+    <header>
+        <!-- Header Start -->
+       <div class="header-area header-transparrent">
+           <div class="headder-top header-sticky">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-md-2">
+                            <!-- Logo -->
+                            <div class="logo">
+                                <a href="index.html"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-9">
+                            <div class="menu-wrapper">
+                                <!-- Main-menu -->
+                                <div class="main-menu">
+                                    <nav class="d-none d-lg-block">
+                                        <ul id="navigation">
+                                            <li><a href="{%url 'homePage'%}">Home</a></li>
+                                            <li><a href="{% url 'joblisting' %}">Find a Jobs </a></li>
+                                            <li><a href="{% url 'aboutPage' %}">About</a></li>
+                                            <li><a href="#">Page</a>
+                                                <ul class="submenu">
+                                                     <li><a href="{% url 'companyList' %}">Company List</a></li>
+                                                    <li><a href="blog.html">Blog</a></li>
+<!--                                                    <li><a href="single-blog.html">Blog Details</a></li>-->
+<!--                                                    <li><a href="elements.html">Elements</a></li>-->
+<!--                                                    <li><a href="job_details.html">job Details</a></li>-->
+                                                </ul>
+                                            </li>
+                                            <li><a href="{% url 'contactPage' %}">Contact</a></li>
+                                            <li><a href="{% url 'profile' %}"><img src="{% static 'images/person-circle.svg'%}" width="25px" height="25px"></a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <!-- Header-btn -->
+                                <div class="header-btn d-none f-right d-lg-block">
+                                    {%if request.session.Username%}
+<!--                                    <li><a > Welcome{{request.session.Username}} / Logout</a></li>-->
+                                    <li><a href="{% url 'UserLogout'%}" class="btn head-btn1"> Welcome {{request.session.Username}}/ Logout</a></li>
+                                    {% else %}
+                                    <a href="{% url 'loginPage'%}" class="btn head-btn1">Register</a>
+                                    <a href="{% url 'loginPage'%}" class="btn head-btn2">Login</a>
+                                    {% endif%}
+
+<!--
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+       </div>
+        <!-- Header End -->
+    </header>
+    <div>
+      <section style="background-color: #eee;">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+<!--            <li class="breadcrumb-item"><a href="#">Home</a></li>-->
+<!--            <li class="breadcrumb-item"><a href="#">User</a></li>-->
+            <li class="breadcrumb-item active" aria-current="page" style="color:black ;font-size:30px;">Profile Settings</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+            {%if request.session.Username%}
+            <h5 class="my-3">{{request.session.Username}}</h5>
+
+             {% endif%}
+              {% for i in detail%}
+                {% if request.session.Username%}
+                    <div class="d-flex justify-content-center mb-1">
+                      <a href="{% url 'displayProfile'  dataid=i.id %}" ><button type="submit" class="btn btn-primary">View</button></a>
+                    </div>
+                 {% endif%}
+               {%endfor %}
+          </div>
+        </div>
+        <div class="card mb-4 mb-lg-0">
+          <div class="card-body p-0">
+            <ul class="list-group list-group-flush rounded-3">
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+<!--                <i class="fas fa-globe fa-lg text-warning"></i>-->
+                <p class="mb-0">Employment</p>
+                <p class="mb-0"><div class="col-sm-9">
+        <button type="button" style="margin-left:100px;" class="btn head-btn2" data-toggle="modal" data-target="#exampleModal">
+          Add
+        </button>
+    </div>
+           </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <p class="mb-0">Education</p>
+                <p class="mb-0"> <div class="col-sm-9">
+              <button type="button" style="margin-left:110px;" class="btn head-btn2" data-toggle="modal" data-target="#exampleModal1">
+                Add
+                </button>
+              </div></p>
+
+              </li>
+<!--              <li class="list-group-item d-flex justify-content-between align-items-center p-3">-->
+<!--                <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>-->
+<!--                <p class="mb-0">@mdbootstrap</p>-->
+<!--              </li>-->
+<!--              <li class="list-group-item d-flex justify-content-between align-items-center p-3">-->
+<!--                <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>-->
+<!--                <p class="mb-0">mdbootstrap</p>-->
+<!--              </li>-->
+<!--              <li class="list-group-item d-flex justify-content-between align-items-center p-3">-->
+<!--                <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>-->
+<!--                <p class="mb-0">mdbootstrap</p>-->
+<!--              </li>-->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+           <form method="post" action="{%url 'updateProfile' dataid=data.id %}" enctype="multipart/form-data" >
+            {%csrf_token%}
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Full Name</p>
+              </div>
+              <div class="col-sm-9">
+                <input class="text-muted mb-0" type="text" placeholder="FullName" style="border:none;" name="fulname" value="{{data.FullName}}">
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <input class="text-muted mb-0" type="email" placeholder="Email" style="border:none;" name="email" value="{{data.Email}}">
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Mobile</p>
+              </div>
+            <div class="col-sm-9">
+               <input class="text-muted mb-0" type="text" placeholder="Mobile" style="border:none;" name="mobile" value="{{data.Mobile}}">
+              </div>
+               </div>
+            <hr>
+               <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Profile Image</p>
+              </div>
+            <div class="col-sm-9">
+                <img src="{{data.ProfileImage.url}}" width="50px" height="50px">
+               <input class="text-muted mb-0" type="file" placeholder="Image" style="border:none;" name="image" >
+              </div>
+               </div>
+            <hr>
+             <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Resume</p>
+              </div>
+              <div class="col-sm-9">
+                <input type="file"   name="resume" style="border:none;" accept="application/pdf,application/vnd.ms-excel" value="{{data.Resume}}" width="50px" height="50px" >
+              </div>
+            </div>
+            <hr>
+              <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Work status</p>
+              </div>
+                  <hr>
+
+          <div class="col-sm-9 ">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="work" id="exampleRadios1" value="experienced" >
+                  <img src="//static.naukimg.com/s/7/104/assets/images/briefcase.bdc5fadf.svg">
+                  <h5 class="main-3">I'm experienced</h5><p class="main-2">  I have work experience (excluding internships)</p>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="work" id="exampleRadios2" value="fresher">
+                      <div class="focusable optionWrap  " tabindex="0" data-val="fresher">
+                          <div class="iconWrap">
+                            <img src="//static.naukimg.com/s/7/104/assets/images/schoolbag.a54cbf7a.svg">
+                          </div>
+                          <div class="textWrap"><h5 class="main-3">I'm a fresher</h5>
+                              <p class="main-2">I am a student/ Haven't worked after graduation </p>
+                          </div>
+                      </div>
+              </div>
+         </div>
+
+            <hr>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><b>Add employment</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <b>Current company name:</b> <input class="form-control" type="text" placeholder="Type your organization" name="cname" value="{{data.CurrentCompanyName}}"><br><br>
+        <b>Current designation: </b><input class="form-control" type="text" placeholder="Type your designation" name="des" value="{{data.Designation}}"> <br><br>
+        <b>Joining date: </b><input type="date" class="form-control" placeholder="" name="jdate" value="{{data.JoiningDate|date:'Y-m-d'}}"><br><br>
+        <b>Current salary: </b><input  class="form-control" type="text" name="salary" value="{{data.CurrentSalary}}"><br><br>
+          <div >
+        <select name="nperiod" class="form-control">
+            <option>{{data.NoticePeriod}}</option>
+          <option> Select Notice period</option>
+          <option>15 Days or less </option>
+          <option>1 Month</option>
+          <option>2 Months </option>
+          <option> 3 Months</option>
+          <option> More than 3 Months </option>
+        </select>
+              </div>
+         <br><br>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><b>Add Education</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <input name="name" type="hidden" placeholder="Username" value="{{request.session.Username}}"><br>
+        <b>Education</b> <input type="text" class="form-control" placeholder="Type your education" name="edu" value="{{data.Education}}"><br><br>
+          <b>University: </b><input type="text" class="form-control" placeholder="Type your university" name="uni" value="{{data.University}}"><br><br>
+          <b>Passout year: </b><input type="date" class="form-control" placeholder="" name="yr" value="{{data.PassoutYear|date:'Y-m-d'}}"><br><br>
+            <b>skills: </b><textarea class="form-control" name="skills">{{data.Skills}}</textarea><br><br>
+         <br><br>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>
+        </div>
+
+<!--        <div class="row">-->
+<!--          <div class="col-md-6">-->
+<!--            <div class="card mb-4 mb-md-0">-->
+<!--              <div class="card-body">-->
+<!--                <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project Status-->
+<!--                </p>-->
+<!--                <p class="mb-1" style="font-size: .77rem;">Web Design</p>-->
+<!--                <div class="progress rounded" style="height: 5px;">-->
+<!--                  <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"-->
+<!--                    aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>-->
+<!--                <div class="progress rounded" style="height: 5px;">-->
+<!--                  <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"-->
+<!--                    aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>-->
+<!--                <div class="progress rounded" style="height: 5px;">-->
+<!--                  <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"-->
+<!--                    aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>-->
+<!--                <div class="progress rounded" style="height: 5px;">-->
+<!--                  <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"-->
+<!--                    aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>-->
+<!--                <div class="progress rounded mb-2" style="height: 5px;">-->
+<!--                  <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"-->
+<!--                    aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-md-6">-->
+<!--            <div class="card mb-4 mb-md-0">-->
+<!--              <div class="card-body">-->
+<!--                <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project Status-->
+<!--                </p>-->
+<!--                <p class="mb-1" style="font-size: .77rem;">Web Design</p>-->
+<!--                <div class="progress rounded" style="height: 5px;">-->
+<!--                  <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"-->
+<!--                    aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>-->
+<!--                <div class="progress rounded" style="height: 5px;">-->
+<!--                  <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"-->
+<!--                    aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>-->
+<!--                <div class="progress rounded" style="height: 5px;">-->
+<!--                  <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"-->
+<!--                    aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>-->
+<!--                <div class="progress rounded" style="height: 5px;">-->
+<!--                  <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"-->
+<!--                    aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>-->
+<!--                <div class="progress rounded mb-2" style="height: 5px;">-->
+<!--                  <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"-->
+<!--                    aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+            <div class="d-flex justify-content-center mb-2">
+              <button type="submit" class="btn btn-primary">update</button>
+              <button type="submit" class="btn btn-primary">cancel</button>
+
+        </div>
+      </div>
+           </form>
+    </div>
+  </div>
+</section>
+    </div>
+    <footer>
+        <!-- Footer Start-->
+        <div class="footer-area footer-bg footer-padding">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                       <div class="single-footer-caption mb-50">
+                         <div class="single-footer-caption mb-30">
+                             <div class="footer-tittle">
+                                 <h4>About Us</h4>
+                                 <div class="footer-pera">
+                                     <p>Heaven frucvitful doesn't cover lesser dvsays appear creeping seasons so behold.</p>
+                                </div>
+                             </div>
+                         </div>
+
+                       </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Contact Info</h4>
+                                <ul>
+                                    <li>
+                                    <p>Address :Luminar TechnoLab,Kochi,Kakkanad.</p>
+                                    </li>
+                                    <li><a href="#">Phone : 9526497113</a></li>
+                                    <li><a href="#">Email : parvathyhdas@gmail.com</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Important Link</h4>
+                                <ul>
+                                     <li><a href="{% url 'homePage' %}">Home</a></li>
+                                    <li><a href="{% url 'aboutPage' %}"> About Us</a></li>
+                                    <li><a href="{% url 'contactPage' %}">Contact Us</a></li>
+                                    <li><a href="{% url 'indexPage' %}">Backend</a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Newsletter</h4>
+                                <div class="footer-pera footer-pera2">
+                                 <p>Heaven fruitful doesn't over lesser in days. Appear creeping.</p>
+                             </div>
+                             <!-- Form -->
+                             <div class="footer-form" >
+                                 <div id="mc_embed_signup">
+                                     <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                     method="get" class="subscribe_form relative mail_part">
+                                         <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
+                                         class="placeholder hide-on-focus" onfocus="this.placeholder = ''"
+                                         onblur="this.placeholder = ' Email Address '">
+                                         <div class="form-icon">
+                                             <button type="submit" name="submit" id="newsletter-submit"
+                                             class="email_icon newsletter-submit button-contactForm"><img src="{% static 'assets/img/icon/form.png' %}" alt=""></button>
+                                         </div>
+                                         <div class="mt-10 info"></div>
+                                     </form>
+                                 </div>
+                             </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <!--  -->
+               <div class="row footer-wejed justify-content-between">
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                        <!-- logo -->
+                        <div class="footer-logo mb-20">
+                        <a href="index.html"><img src="{% static 'assets/img/logo/logo2_footer.png' %}" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                    <div class="footer-tittle-bottom">
+                        <span>5000+</span>
+                        <p>Talented Hunter</p>
+                    </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="footer-tittle-bottom">
+                            <span>451</span>
+                            <p>Talented Hunter</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <!-- Footer Bottom Tittle -->
+                        <div class="footer-tittle-bottom">
+                            <span>568</span>
+                            <p>Talented Hunter</p>
+                        </div>
+                    </div>
+               </div>
+            </div>
+        </div>
+
+
+
+        <!-- footer-bottom area -->
+        <div class="footer-bottom-area footer-bg">
+            <div class="container">
+                <div class="footer-border">
+                     <div class="row d-flex justify-content-between align-items-center">
+                         <div class="col-xl-10 col-lg-10 ">
+                             <div class="footer-copy-right">
+                                 <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                             </div>
+                         </div>
+                         <div class="col-xl-2 col-lg-2">
+                             <div class="footer-social f-right">
+                                 <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                 <a href="#"><i class="fab fa-twitter"></i></a>
+                                 <a href="#"><i class="fas fa-globe"></i></a>
+                                 <a href="#"><i class="fab fa-behance"></i></a>
+                             </div>
+                         </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+    </footer>
+
+	<!-- JS here -->
+
+		<!-- All JS Custom Plugins Link Here here -->
+          <script src="{% static 'assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+		<!-- Jquery, Popper, Bootstrap -->
+		<script src="{% static 'assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static 'assets/js/popper.min.js' %}"></script>
+        <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+	    <!-- Jquery Mobile Menu -->
+        <script src="{% static 'assets/js/jquery.slicknav.min.js' %}"></script>
+
+		<!-- Jquery Slick , Owl-Carousel Plugins -->
+        <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'assets/js/slick.min.js' %}"></script>
+        <script src="{% static 'assets/js/price_rangs.js' %}"></script>
+
+		<!-- One Page, Animated-HeadLin -->
+        <script src="{% static 'assets/js/wow.min.js' %}"></script>
+		<script src="{% static 'assets/js/animated.headline.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.magnific-popup.js' %}"></script>
+
+		<!-- Scrollup, nice-select, sticky -->
+        <script src="{% static 'assets/js/jquery.scrollUp.min.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.nice-select.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.sticky.js' %}"></script>
+
+        <!-- contact js -->
+        <script src="{% static 'assets/js/contact.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.form.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'assets/js/mail-script.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.ajaxchimp.min.js' %}"></script>
+
+		<!-- Jquery Plugins, main Jquery -->
+        <script src="{% static 'assets/js/plugins.js' %}"></script>
+        <script src="{% static 'assets/js/main.js' %}"></script>
+
+
+</body>
+</html>
