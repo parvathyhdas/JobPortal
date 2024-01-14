@@ -17,8 +17,9 @@ def homePage(request):
 
 def joblisting(request):
     data = JobDB.objects.all()
+    comp = CompanyDB.objects.all()
     detail = ApplicationDB.objects.all()
-    return render(request,"Joblist.html",{'data':data,'detail':detail})
+    return render(request,"Joblist.html",{'data':data,'detail':detail,'comp':comp})
 
 def SingleJob(request,dataid):
     data = JobDB.objects.filter(id=dataid)
